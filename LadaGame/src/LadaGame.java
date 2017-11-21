@@ -17,8 +17,8 @@ import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener; 
 import java.util.Enumeration;
 import javafx.event.EventHandler;
-import javafx.application.Platform;
 import javafx.stage.WindowEvent;
+import javafx.application.Platform;
 
 public class LadaGame extends Application implements SerialPortEventListener {
     Group god = new Group();
@@ -35,7 +35,7 @@ public class LadaGame extends Application implements SerialPortEventListener {
 			"/dev/tty.usbserial-A9007UX1", // Mac OS X
                         "/dev/ttyACM0", // Raspberry Pi
 			"/dev/ttyUSB0", // Linux
-			"COM6", // Windows
+			"COM7", // Windows
                         };
     BufferedReader input;
     OutputStream output;
@@ -133,8 +133,8 @@ public class LadaGame extends Application implements SerialPortEventListener {
         mainMenu.buttonQuit.setOnMouseClicked((MouseEvent e) -> {
             Platform.exit();
         });
-	
-	primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 if(serialPort != null) {
@@ -154,7 +154,7 @@ public class LadaGame extends Application implements SerialPortEventListener {
     public void serialEvent(SerialPortEvent oEvent) {
         if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
-                                rotation = Double.parseDouble(input.readLine());
+                                rotation = Double.parseDouble(input.readLine()) / 100 - 10;
 			} catch (Exception e) {
 				System.err.println(e.toString());
                         }

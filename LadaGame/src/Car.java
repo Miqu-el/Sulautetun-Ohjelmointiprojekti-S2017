@@ -29,7 +29,7 @@ public class Car extends Rectangle{
     private String direction;
     private double degree;
     private final double mouseCenter = sceneWidth / 2;
-    private final double deadzone = 20;
+    private final double deadzone = 10;
     private double serialRotation = 0;
     private double velocity = 0;
     Car newCar;
@@ -74,6 +74,7 @@ public class Car extends Rectangle{
     
     public void setRoadX(double roadX) {
         this.roadX = roadX;
+        //System.out.println(roadX);
     }
     
     public void setGrassX(double grassX) {
@@ -127,9 +128,9 @@ public class Car extends Rectangle{
                 double playerX = player.getX() + 75 / 2;
                 
                 if(Math.abs(serialRotation) > deadzone) { //liike
-                    velocity += serialRotation / 20;
-                    if(Math.abs(velocity) > 30)
-                        velocity = 30 * serialRotation / Math.abs(serialRotation);
+                    velocity += (serialRotation - deadzone * serialRotation / Math.abs(serialRotation)) / 10;
+                    if(Math.abs(velocity) > 60)
+                        velocity = 60 * serialRotation / Math.abs(serialRotation);
                 } else velocity = velocity * 0.9;
                 
                 player.setX(player.getX() + velocity / 6);
